@@ -5,6 +5,7 @@
 // Dart imports:
 import 'dart:async';
 import 'dart:io';
+
 import 'package:better_player/src/configuration/better_player_buffering_configuration.dart';
 import 'package:better_player/src/video_player/video_player_platform_interface.dart';
 import 'package:flutter/material.dart';
@@ -635,6 +636,56 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
 
   static Future stopPreCache(String url, String? cacheKey) async {
     return _videoPlayerPlatform.stopPreCache(url, cacheKey);
+  }
+}
+
+extension VideoPlayerControllerX on VideoPlayerController {
+  Future<bool> tryPlay() async {
+    if (_isDisposed) {
+      return false;
+    }
+    await play();
+    return true;
+  }
+
+  Future<bool> tryPause() async {
+    if (_isDisposed) {
+      return false;
+    }
+    await pause();
+    return true;
+  }
+
+  Future<bool> trySetLooping(bool looping) async {
+    if (_isDisposed) {
+      return false;
+    }
+    await setLooping(looping);
+    return true;
+  }
+
+  Future<bool> trySetVolume(double volume) async {
+    if (_isDisposed) {
+      return false;
+    }
+    await setVolume(volume);
+    return true;
+  }
+
+  Future<bool> trySetSpeed(double speed) async {
+    if (_isDisposed) {
+      return false;
+    }
+    await setSpeed(speed);
+    return true;
+  }
+
+  Future<bool> trySeekTo(Duration? position) async {
+    if (_isDisposed) {
+      return false;
+    }
+    await seekTo(position);
+    return true;
   }
 }
 
