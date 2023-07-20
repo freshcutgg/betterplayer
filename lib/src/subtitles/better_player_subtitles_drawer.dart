@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:better_player/better_player.dart';
 import 'package:better_player/src/subtitles/better_player_subtitle.dart';
 import 'package:flutter/material.dart';
@@ -82,12 +83,14 @@ class _BetterPlayerSubtitlesDrawerState
 
   ///Called when player state has changed, i.e. new player position, etc.
   void _updateState() {
-    if (mounted) {
-      setState(() {
-        _latestValue =
-            widget.betterPlayerController.videoPlayerController!.value;
-      });
-    }
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          _latestValue =
+              widget.betterPlayerController.videoPlayerController!.value;
+        });
+      }
+    });
   }
 
   @override
